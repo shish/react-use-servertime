@@ -14,7 +14,9 @@ export type ServerTimeContextType = {
   setTweak: (x: number) => void;
 };
 
-export function useServerTime(user_props: ServerTimeProps): ServerTimeContextType {
+export function useServerTime(
+  user_props: ServerTimeProps
+): ServerTimeContextType {
   const props = {
     samples: 5,
     interval: 1,
@@ -32,7 +34,8 @@ export function useServerTime(user_props: ServerTimeProps): ServerTimeContextTyp
     fetch(url, { credentials: "omit" })
       .then((r) => r.json())
       .then((response) => {
-        const server_time = typeof response == "number" ? response : response.time_s;
+        const server_time =
+          typeof response == "number" ? response : response.time_s;
         const recvd = Date.now() / 1000;
         const ping = (recvd - sent) / 2;
         const offset = server_time - ping - sent;
@@ -48,7 +51,9 @@ export function useServerTime(user_props: ServerTimeProps): ServerTimeContextTyp
       });
   }
   useEffect(() => {
-    setOffset(offsets.length ? offsets.reduce((a, b) => a + b, 0) / offsets.length : 0);
+    setOffset(
+      offsets.length ? offsets.reduce((a, b) => a + b, 0) / offsets.length : 0
+    );
   }, [offsets]);
   useEffect(() => {
     sync(props.url);
@@ -58,7 +63,7 @@ export function useServerTime(user_props: ServerTimeProps): ServerTimeContextTyp
     }
     return () => {
       sync_id && clearInterval(sync_id);
-    }
+    };
   }, [props.url, props.sync]);
 
   // Update `now` on a regular interval
@@ -85,10 +90,15 @@ export const ServerTimeContext = React.createContext<ServerTimeContextType>({
   now: 0,
   offset: 0,
   tweak: 0,
-  setTweak: () => { },
+  setTweak: () => {},
 });
 
-export function ServerTimeProvider(props: ServerTimeProps & { children: React.ReactNode }) {
+export function ServerTimeProvider(
+  props: ServerTimeProps & { children: React.ReactNode }
+) {
   const value = useServerTime(props);
-  return React.createElement(ServerTimeContext.Provider, { value, children: props.children });
+  return React.createElement(ServerTimeContext.Provider, {
+    value,
+    children: props.children,
+  });
 }

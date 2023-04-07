@@ -4,12 +4,33 @@
         <meta charset="UTF-8">
         <title>ServerTime Demo</title>
         <meta name="viewport" content="width=device-width">
-        <script type="module">
-// TODO: make a demo
-        </script>
     </head>
     <body>
         <noscript>This page requires JavaScript</noscript>
         <main id="app"></main>
+        <script type="module">
+            import React from "react";
+            import ReactDOM from "react-dom/client";
+            import { useServerTime } from "./src/index.ts";
+            
+            function MyClock() {
+                const { now, offset } = useServerTime({
+                    url: "https://karakara.uk/time.json",
+                    sync: 5, // re-sync every 5 seconds
+                    interval: 1, // update `now` every 1 second
+                });
+                const colors = ["red", "green", "blue"];
+                const idx = Math.floor(now) % colors.length;
+                return React.createElement("div", {
+                    style: {
+                        color: colors[idx],
+                    },
+                    children: `The time is ${now} - compared to my clock, that is ${offset}`
+                });
+            }
+            
+            const root = ReactDOM.createRoot(document.getElementById("app"));
+            root.render(React.createElement(MyClock));
+        </script>
     </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "name": "@shish2k/react-use-servertime",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Keep multiple clocks in sync with a server",
   "keywords": [
     "react",
@@ -26,9 +26,12 @@
     "@parcel/transformer-typescript-types": "^2.8.3",
     "parcel": "^2.8.3",
     "prettier": "^2.7.1",
+    "process": "^0.11.10",
+    "react-dom": "^18.2.0",
     "typescript": "4.7"
   },
   "scripts": {
+    "demo": "parcel serve demo.html",
     "clean": "npx rimraf coverage dist node_modules .parcel-cache",
     "format": "prettier --write 'src/**/*.ts'",
     "build": "parcel build",

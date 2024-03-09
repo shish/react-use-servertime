@@ -70,7 +70,7 @@ export function useServerTime(
   useEffect(() => {
     let interval_id: ReturnType<typeof setTimeout> | null = null;
     function waitForNextInterval() {
-      const now = Date.now() / 1000 - offset + tweak;
+      const now = Date.now() / 1000 + offset + tweak;
       setNow(now);
       interval_id = setTimeout(
         waitForNextInterval,

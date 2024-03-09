@@ -81,7 +81,7 @@ export function useServerTime(
     return () => {
       interval_id && clearInterval(interval_id);
     };
-  }, [props.interval]);
+  }, [props.interval, offset, tweak]);
 
   return { now, offset, tweak, setTweak };
 }

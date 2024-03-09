@@ -23,11 +23,11 @@
             });
             const colors = ["red", "green", "blue"];
             const idx = Math.floor(now) % colors.length;
-            return React.createElement("div", {
+            return React.createElement("pre", {
                 style: {
                     color: colors[idx],
                 },
-                children: `The time is ${now} - compared to my clock, that is ${offset}`
+                children: `ServerTime: ${now}\nLocalTime : ${Date.now()/1000}\nOffset    : ${offset.toFixed(3)}`
             });
         }
 

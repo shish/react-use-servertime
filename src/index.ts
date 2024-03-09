@@ -97,7 +97,11 @@ export function ServerTimeProvider(
   props: ServerTimeProps & { children: React.ReactNode }
 ) {
   const value = useServerTime(props);
-  return React.createElement(ServerTimeContext.Provider, {
-    value,
-  }, ...props.children);
+  return React.createElement(
+    ServerTimeContext.Provider,
+    {
+      value,
+    },
+    ...props.children
+  );
 }

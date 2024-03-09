@@ -42,7 +42,7 @@ export function useServerTime(
         // TODO: if ping is too large, get a new sample
         // console.log("New offset", offset, offsets, props.samples);
         setOffsets((offsets) => {
-          let new_offsets = [...offsets, offset];
+          const new_offsets = [...offsets, offset];
           if (new_offsets.length > props.samples) {
             new_offsets.shift();
           }
@@ -68,7 +68,7 @@ export function useServerTime(
 
   // Update `now` on a regular interval
   useEffect(() => {
-    var interval_id: ReturnType<typeof setTimeout> | null = null;
+    let interval_id: ReturnType<typeof setTimeout> | null = null;
     function waitForNextInterval() {
       const now = Date.now() / 1000 - offset + tweak;
       setNow(now);
@@ -99,6 +99,5 @@ export function ServerTimeProvider(
   const value = useServerTime(props);
   return React.createElement(ServerTimeContext.Provider, {
     value,
-    children: props.children,
-  });
+  }, ...props.children);
 }

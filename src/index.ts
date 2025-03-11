@@ -15,7 +15,7 @@ export type ServerTimeContextType = {
 };
 
 export function useServerTime(
-  user_props: ServerTimeProps
+  user_props: ServerTimeProps,
 ): ServerTimeContextType {
   const props = {
     samples: 5,
@@ -52,7 +52,7 @@ export function useServerTime(
   }
   useEffect(() => {
     setOffset(
-      offsets.length ? offsets.reduce((a, b) => a + b, 0) / offsets.length : 0
+      offsets.length ? offsets.reduce((a, b) => a + b, 0) / offsets.length : 0,
     );
   }, [offsets]);
   useEffect(() => {
@@ -74,7 +74,7 @@ export function useServerTime(
       setNow(now);
       interval_id = setTimeout(
         waitForNextInterval,
-        (props.interval - (now % props.interval)) * 1000
+        (props.interval - (now % props.interval)) * 1000,
       );
     }
     waitForNextInterval();
@@ -94,7 +94,7 @@ export const ServerTimeContext = React.createContext<ServerTimeContextType>({
 });
 
 export function ServerTimeProvider(
-  props: ServerTimeProps & { children: React.ReactNode }
+  props: ServerTimeProps & { children: React.ReactNode },
 ) {
   const value = useServerTime(props);
   return React.createElement(
@@ -102,6 +102,6 @@ export function ServerTimeProvider(
     {
       value,
     },
-    ...props.children
+    ...props.children,
   );
 }

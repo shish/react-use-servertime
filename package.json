@@ -1,6 +1,6 @@
 {
   "name": "@shish2k/react-use-servertime",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Keep multiple clocks in sync with a server",
   "keywords": [
     "react",

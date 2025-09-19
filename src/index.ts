@@ -86,12 +86,13 @@ export function useServerTime(
   return { now, offset, tweak, setTweak };
 }
 
-export const ServerTimeContext = React.createContext<ServerTimeContextType>({
-  now: 0,
-  offset: 0,
-  tweak: 0,
-  setTweak: () => {},
-});
+export const ServerTimeContext: React.Context<ServerTimeContextType> =
+  React.createContext<ServerTimeContextType>({
+    now: 0,
+    offset: 0,
+    tweak: 0,
+    setTweak: () => {},
+  });
 
 export function ServerTimeProvider(
   props: ServerTimeProps & { children: React.ReactNode },

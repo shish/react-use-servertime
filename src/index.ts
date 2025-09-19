@@ -103,6 +103,6 @@ export function ServerTimeProvider(
     {
       value,
     },
-    ...props.children,
+    props.children,
   );
 }

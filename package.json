@@ -1,6 +1,6 @@
 {
   "name": "@shish2k/react-use-servertime",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Keep multiple clocks in sync with a server",
   "keywords": [
     "react",
@@ -28,7 +28,9 @@
     "prettier": "^3.5.3",
     "process": "^0.11.10",
     "react-dom": "^18.2.0 || ^19.0.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
   },
   "scripts": {
     "demo": "parcel serve demo.html",

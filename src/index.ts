@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export type ServerTimeProps = {
   url: string;
@@ -29,27 +29,28 @@ export function useServerTime(
   const [now, setNow] = useState<number>(Date.now() / 1000);
 
   // Sync immediately on startup, and then on a schedule if props.sync is set
-  function sync(url: string) {
-    const sent = Date.now() / 1000;
-    fetch(url, { credentials: "omit" })
-      .then((r) => r.json())
-      .then((response) => {
-        const server_time =
-          typeof response == "number" ? response : response.time_s;
-        const recvd = Date.now() / 1000;
-        const ping = (recvd - sent) / 2;
-        const offset = server_time - ping - sent;
-        // TODO: if ping is too large, get a new sample
-        // console.log("New offset", offset, offsets, props.samples);
-        setOffsets((offsets) => {
-          const new_offsets = [...offsets, offset];
-          if (new_offsets.length > props.samples) {
-            new_offsets.shift();
-          }
-          return new_offsets;
+  const sync = useCallback(
+    (url: string) => {
+      const sent = Date.now() / 1000;
+      fetch(url, { credentials: "omit" })
+        .then((r) => r.json())
+        .then((response) => {
+          const server_time =
+            typeof response === "number" ? response : response.time_s;
+          const recvd = Date.now() / 1000;
+          const ping = (recvd - sent) / 2;
+          const offset = server_time - ping - sent;
+          setOffsets((offsets) => {
+            const new_offsets = [...offsets, offset];
+            if (new_offsets.length > props.samples) {
+              new_offsets.shift();
+            }
+            return new_offsets;
+          });
         });
-      });
-  }
+    },
+    [props.samples],
+  );
   useEffect(() => {
     setOffset(
       offsets.length ? offsets.reduce((a, b) => a + b, 0) / offsets.length : 0,
@@ -64,7 +65,7 @@ export function useServerTime(
     return () => {
       sync_id && clearInterval(sync_id);
     };
-  }, [props.url, props.sync]);
+  }, [props.url, props.sync, sync]);
 
   // Update `now` on a regular interval
   useEffect(() => {

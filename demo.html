@@ -23,12 +23,11 @@
             });
             const colors = ["red", "green", "blue"];
             const idx = Math.floor(now) % colors.length;
-            return React.createElement("pre", {
-                style: {
-                    color: colors[idx],
-                },
-                children: `ServerTime: ${now}\nLocalTime : ${Date.now()/1000}\nOffset    : ${offset.toFixed(3)}`
-            });
+            return React.createElement(
+                "pre",
+                { style: { color: colors[idx] } },
+                `ServerTime: ${now}\nLocalTime : ${Date.now() / 1000}\nOffset    : ${offset.toFixed(3)}`
+            );
         }
 
         const root = ReactDOM.createRoot(document.getElementById("app"));
